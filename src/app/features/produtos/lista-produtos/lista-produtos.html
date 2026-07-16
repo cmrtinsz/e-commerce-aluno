@@ -7,3 +7,7 @@
     </app-produto>
 }
 <P><button (click)="adicionarProduto()">Adicionar Produto</button></P>
+<H2>Total de produtos: {{totalProdutos()}}</H2>
+<h2>valor Total: {{valorTotal() | precoFormatado}}</h2>
+<P><button (click) = "substituirProdutos()">
+    Substituir Produtos</button></P>
