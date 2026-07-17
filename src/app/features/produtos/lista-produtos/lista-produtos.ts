@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { Produto } from '../produto/produto';
 import {computed} from '@angular/core';
 import { PrecoFormatadoPipe } from '../../../shared/pipes/preco-formatado-pipe';
+import {effect} from '@angular/core'
 
 @Component({
   selector: 'app-lista-produtos',
@@ -33,7 +34,8 @@ export class ListaProdutos {
     }
   ]);
   exibirProduto (nome: string){
-    console.log ('Produto Selecionado: ', nome); 
+    //console.log ('Produto Selecionado: ', nome); 
+    this.produtoSelecionado.set(nome);
   }
      adicionarProduto(){
       this.produtos.update(listaAtual => [
@@ -49,4 +51,18 @@ export class ListaProdutos {
       {nome: 'Arroz Fazenda', preco: 5}, 
     ]);
 }
+constructor(){
+  effect(() =>{
+    console.log('Lista de Produtos Alterados: ', this.produtos())
+  });
+  effect(() => {
+console.log('Valor Total atualizado: ', this.valorTotal());
+  });
+  effect(() => {
+if (typeof document !== 'undefined') {
+  document.title = `(${this.totalProdutos()}) Minha Loja`;
+    }
+   });
+  }
+  produtoSelecionado = signal<string | null> (null);
 }
