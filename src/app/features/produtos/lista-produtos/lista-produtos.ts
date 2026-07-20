@@ -2,11 +2,12 @@ import { Component, signal } from '@angular/core';
 import { Produto } from '../produto/produto';
 import {computed} from '@angular/core';
 import { PrecoFormatadoPipe } from '../../../shared/pipes/preco-formatado-pipe';
+import { UpperCasePipe } from '@angular/common';
 import {effect} from '@angular/core'
 
 @Component({
   selector: 'app-lista-produtos',
-  imports: [Produto, PrecoFormatadoPipe],
+  imports: [Produto, PrecoFormatadoPipe, UpperCasePipe],
   templateUrl: './lista-produtos.html',
   styleUrl: './lista-produtos.css',
 })
@@ -39,7 +40,7 @@ export class ListaProdutos {
   }
      adicionarProduto(){
       this.produtos.update(listaAtual => [
-        ...listaAtual, {nome:'Sony Playstation 5', preco:646}
+        ...listaAtual, {nome:'Processador Intel Core i5 ', preco:646}
       ]);
   }
   totalProdutos = computed (() => this.produtos().length);
@@ -48,7 +49,11 @@ export class ListaProdutos {
   
   substituirProdutos (){
     this.produtos.set([
-      {nome: 'Arroz Fazenda', preco: 5}, 
+      {nome: 'Teclado', preco: 40},
+       {nome: 'Mouse', preco: 10},
+       {nome: 'Monitor', preco: 100},
+       {nome: 'Desktop', preco: 500},
+       {nome: 'Headset', preco: 25},
     ]);
 }
 constructor(){
@@ -65,4 +70,13 @@ if (typeof document !== 'undefined') {
    });
   }
   produtoSelecionado = signal<string | null> (null);
+  carrinho = signal<{ nome: string; preco: number}[]>([]);
+  adicionarAocarrinho(produto:{nome: string; preco: number}){
+    this.carrinho.update(listaAtual => [
+      ...listaAtual,produto])};
+      quantidadeCarrinho = computed (() => this.carrinho().length);
+      totalCarrinho = computed(() => {
+        return this.carrinho().reduce((total, item) =>
+          total + item.preco,0);
+      });
 }
