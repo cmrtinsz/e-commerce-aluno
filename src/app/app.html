@@ -1,2 +1,11 @@
-<h1>Minha Loja Virtual</h1>
-<app-lista-produtos></app-lista-produtos>
+<!--Cabeçalho: nome da loja criado com variável {{nomeLoja}} -->
+<!-- Pra alterar o nome da loja localizar na class App variável nomeLoja-->
+<h1>{{nomeLoja}}</h1>
+<!-- barra de navegação, adicionar -->
+<nav>
+    <a routerLink="/">Produtos</a>
+    <a routerLink="/carrinho">Carrinho</a>
+</nav>
+<hr />
+
+<router-outlet></router-outlet>
